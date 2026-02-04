@@ -53,6 +53,19 @@ app.secret_key = config.SECRET_KEY
 ADMIN_DATA_FILE = os.path.join(os.path.dirname(__file__), 'admin_data.json')
 
 # =============================================================================
+# HTTPS REDIRECT (Production)
+# =============================================================================
+# Force HTTPS in production environments (Render, Railway, etc.)
+
+@app.before_request
+def force_https():
+    """Redirect HTTP to HTTPS in production."""
+    if not config.DEBUG_MODE:
+        if request.headers.get('X-Forwarded-Proto', 'http') == 'http':
+            url = request.url.replace('http://', 'https://', 1)
+            return redirect(url, code=301)
+
+# =============================================================================
 # ROUTES
 # =============================================================================
 
