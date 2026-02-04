@@ -16,3 +16,7 @@ werkzeug==3.0.1
 # python-dotenv - For loading environment variables (optional)
 # Useful for keeping API keys secure
 python-dotenv==1.0.0
+
+# Gunicorn - Production WSGI server for deployment
+# Required for hosting on Render, Railway, etc.
+gunicorn==21.2.0
