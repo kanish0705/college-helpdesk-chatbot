@@ -18,12 +18,32 @@ SECRET_KEY = "your-secret-key-change-in-production"
 # AI SETTINGS
 # =============================================================================
 
-# OpenAI API Key (replace with your actual key)
-# Get your API key from: https://platform.openai.com/api-keys
-OPENAI_API_KEY = "your-openai-api-key-here"
+# Choose your LLM provider: "openai", "gemini", or "groq"
+# - openai: GPT-3.5/GPT-4 (paid, most capable)
+# - gemini: Google's Gemini (free tier available)
+# - groq: Ultra-fast inference (free tier available)
+LLM_PROVIDER = "groq"  # Change this to switch providers
 
-# AI Model to use (gpt-3.5-turbo is cheaper and faster)
-AI_MODEL = "gpt-3.5-turbo"
+# =============================================================================
+# OpenAI Configuration
+# Get your API key from: https://platform.openai.com/api-keys
+# =============================================================================
+OPENAI_API_KEY = "your-openai-api-key-here"
+OPENAI_MODEL = "gpt-3.5-turbo"  # Options: gpt-3.5-turbo, gpt-4, gpt-4-turbo
+
+# =============================================================================
+# Google Gemini Configuration
+# Get your API key from: https://makersuite.google.com/app/apikey
+# =============================================================================
+GEMINI_API_KEY = "your-gemini-api-key-here"
+GEMINI_MODEL = "gemini-1.5-flash"  # Options: gemini-1.5-flash, gemini-1.5-pro
+
+# =============================================================================
+# Groq Configuration (FREE - Recommended for testing)
+# Get your API key from: https://console.groq.com/keys
+# =============================================================================
+GROQ_API_KEY = "your-groq-api-key-here"
+GROQ_MODEL = "llama-3.1-8b-instant"  # Options: llama-3.1-8b-instant, mixtral-8x7b-32768
 
 # Maximum tokens for AI response (controls response length)
 MAX_TOKENS = 150

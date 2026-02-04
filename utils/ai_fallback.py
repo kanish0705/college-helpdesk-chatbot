@@ -38,16 +38,25 @@ This multi-layer approach ensures:
 
 import re
 import config
+import requests
+import json
 
 # Try to import OpenAI library
-# If not installed, AI features will be disabled
 try:
     import openai
     OPENAI_AVAILABLE = True
 except ImportError:
     OPENAI_AVAILABLE = False
-    print("Warning: OpenAI library not installed. AI fallback disabled.")
-    print("Install with: pip install openai")
+
+# Try to import Google Generative AI library
+try:
+    import google.generativeai as genai
+    GEMINI_AVAILABLE = True
+except ImportError:
+    GEMINI_AVAILABLE = False
+
+# Groq uses OpenAI-compatible API, so we'll use requests
+GROQ_AVAILABLE = True  # Always available via HTTP requests
 
 # =============================================================================
 # AI CONFIGURATION
@@ -202,102 +211,189 @@ def get_ai_response(user_message):
             "answer": str     # The response message
         }
     """
+    # Route to appropriate provider
+    provider = config.LLM_PROVIDER.lower()
     
-    # Check if OpenAI library is available
+    if provider == "openai":
+        return get_openai_response(user_message)
+    elif provider == "gemini":
+        return get_gemini_response(user_message)
+    elif provider == "groq":
+        return get_groq_response(user_message)
+    else:
+        return {
+            "success": False,
+            "answer": config.FALLBACK_MESSAGE
+        }
+
+
+# =============================================================================
+# OPENAI PROVIDER
+# =============================================================================
+
+def get_openai_response(user_message):
+    """Get response from OpenAI GPT models."""
+    
     if not OPENAI_AVAILABLE:
-        return {
-            "success": False,
-            "answer": config.FALLBACK_MESSAGE
-        }
+        return {"success": False, "answer": config.FALLBACK_MESSAGE}
     
-    # Check if API key is configured
     if not config.OPENAI_API_KEY or config.OPENAI_API_KEY == "your-openai-api-key-here":
-        return {
-            "success": False,
-            "answer": config.FALLBACK_MESSAGE
-        }
+        return {"success": False, "answer": config.FALLBACK_MESSAGE}
     
     try:
-        # Initialize OpenAI client with API key
         client = openai.OpenAI(api_key=config.OPENAI_API_KEY)
         
-        # Make API call to GPT
         response = client.chat.completions.create(
-            model=config.AI_MODEL,
+            model=config.OPENAI_MODEL,
             messages=[
-                {
-                    "role": "system",
-                    "content": SYSTEM_PROMPT
-                },
-                {
-                    "role": "user", 
-                    "content": user_message
-                }
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_message}
             ],
             max_tokens=config.MAX_TOKENS,
-            temperature=0.7,  # Controls randomness (0=focused, 1=creative)
-            top_p=0.9  # Controls diversity of responses
+            temperature=0.7
         )
         
-        # Extract the response text
         ai_answer = response.choices[0].message.content.strip()
         
-        # Validate response is not empty
         if not ai_answer:
-            return {
-                "success": False,
-                "answer": config.FALLBACK_MESSAGE
-            }
+            return {"success": False, "answer": config.FALLBACK_MESSAGE}
         
-        # =================================================================
-        # GUARDRAIL: Post-response validation
-        # Even after AI responds, we verify it stays within scope
-        # This is a second layer of protection against AI hallucination
-        # =================================================================
-        
-        # Check if AI response contains out-of-scope indicators
         if is_response_out_of_scope(ai_answer):
-            return {
-                "success": True,
-                "answer": config.OFF_TOPIC_MESSAGE
-            }
+            return {"success": True, "answer": config.OFF_TOPIC_MESSAGE}
         
-        return {
-            "success": True,
-            "answer": ai_answer
-        }
-        
-    except openai.AuthenticationError:
-        # Invalid API key
-        print("Error: Invalid OpenAI API key")
-        return {
-            "success": False,
-            "answer": config.FALLBACK_MESSAGE
-        }
-        
-    except openai.RateLimitError:
-        # Too many requests or quota exceeded
-        print("Error: OpenAI rate limit exceeded")
-        return {
-            "success": False,
-            "answer": "I'm currently experiencing high demand. Please try again in a moment or contact the admin office."
-        }
-        
-    except openai.APIConnectionError:
-        # Network issues
-        print("Error: Could not connect to OpenAI API")
-        return {
-            "success": False,
-            "answer": config.FALLBACK_MESSAGE
-        }
+        return {"success": True, "answer": ai_answer}
         
     except Exception as e:
-        # Any other unexpected error
-        print(f"Error in AI fallback: {str(e)}")
-        return {
-            "success": False,
-            "answer": config.FALLBACK_MESSAGE
+        print(f"OpenAI Error: {str(e)}")
+        return {"success": False, "answer": config.FALLBACK_MESSAGE}
+
+
+# =============================================================================
+# GOOGLE GEMINI PROVIDER
+# =============================================================================
+
+def get_gemini_response(user_message):
+    """Get response from Google Gemini models."""
+    
+    if not GEMINI_AVAILABLE:
+        # Try using REST API as fallback
+        return get_gemini_rest_response(user_message)
+    
+    if not config.GEMINI_API_KEY or config.GEMINI_API_KEY == "your-gemini-api-key-here":
+        return {"success": False, "answer": config.FALLBACK_MESSAGE}
+    
+    try:
+        genai.configure(api_key=config.GEMINI_API_KEY)
+        model = genai.GenerativeModel(config.GEMINI_MODEL)
+        
+        # Combine system prompt with user message
+        full_prompt = f"{SYSTEM_PROMPT}\n\nUser Question: {user_message}"
+        
+        response = model.generate_content(full_prompt)
+        ai_answer = response.text.strip()
+        
+        if not ai_answer:
+            return {"success": False, "answer": config.FALLBACK_MESSAGE}
+        
+        if is_response_out_of_scope(ai_answer):
+            return {"success": True, "answer": config.OFF_TOPIC_MESSAGE}
+        
+        return {"success": True, "answer": ai_answer}
+        
+    except Exception as e:
+        print(f"Gemini Error: {str(e)}")
+        return {"success": False, "answer": config.FALLBACK_MESSAGE}
+
+
+def get_gemini_rest_response(user_message):
+    """Fallback: Use Gemini via REST API if library not installed."""
+    
+    if not config.GEMINI_API_KEY or config.GEMINI_API_KEY == "your-gemini-api-key-here":
+        return {"success": False, "answer": config.FALLBACK_MESSAGE}
+    
+    try:
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{config.GEMINI_MODEL}:generateContent"
+        
+        headers = {"Content-Type": "application/json"}
+        params = {"key": config.GEMINI_API_KEY}
+        
+        full_prompt = f"{SYSTEM_PROMPT}\n\nUser Question: {user_message}"
+        
+        data = {
+            "contents": [{"parts": [{"text": full_prompt}]}],
+            "generationConfig": {"maxOutputTokens": config.MAX_TOKENS}
         }
+        
+        response = requests.post(url, headers=headers, params=params, json=data, timeout=30)
+        response.raise_for_status()
+        
+        result = response.json()
+        ai_answer = result["candidates"][0]["content"]["parts"][0]["text"].strip()
+        
+        if is_response_out_of_scope(ai_answer):
+            return {"success": True, "answer": config.OFF_TOPIC_MESSAGE}
+        
+        return {"success": True, "answer": ai_answer}
+        
+    except Exception as e:
+        print(f"Gemini REST Error: {str(e)}")
+        return {"success": False, "answer": config.FALLBACK_MESSAGE}
+
+
+# =============================================================================
+# GROQ PROVIDER (FREE - Recommended)
+# =============================================================================
+
+def get_groq_response(user_message):
+    """
+    Get response from Groq (ultra-fast LLM inference).
+    FREE tier available at: https://console.groq.com/keys
+    """
+    
+    if not config.GROQ_API_KEY or config.GROQ_API_KEY == "your-groq-api-key-here":
+        return {"success": False, "answer": config.FALLBACK_MESSAGE}
+    
+    try:
+        url = "https://api.groq.com/openai/v1/chat/completions"
+        
+        headers = {
+            "Authorization": f"Bearer {config.GROQ_API_KEY}",
+            "Content-Type": "application/json"
+        }
+        
+        data = {
+            "model": config.GROQ_MODEL,
+            "messages": [
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_message}
+            ],
+            "max_tokens": config.MAX_TOKENS,
+            "temperature": 0.7
+        }
+        
+        response = requests.post(url, headers=headers, json=data, timeout=30)
+        response.raise_for_status()
+        
+        result = response.json()
+        ai_answer = result["choices"][0]["message"]["content"].strip()
+        
+        if not ai_answer:
+            return {"success": False, "answer": config.FALLBACK_MESSAGE}
+        
+        if is_response_out_of_scope(ai_answer):
+            return {"success": True, "answer": config.OFF_TOPIC_MESSAGE}
+        
+        return {"success": True, "answer": ai_answer}
+        
+    except requests.exceptions.Timeout:
+        print("Groq Error: Request timed out")
+        return {"success": False, "answer": config.FALLBACK_MESSAGE}
+    except requests.exceptions.RequestException as e:
+        print(f"Groq Error: {str(e)}")
+        return {"success": False, "answer": config.FALLBACK_MESSAGE}
+    except Exception as e:
+        print(f"Groq Error: {str(e)}")
+        return {"success": False, "answer": config.FALLBACK_MESSAGE}
 
 
 # =============================================================================

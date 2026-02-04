@@ -5,10 +5,16 @@
 # Used to create the web server and handle HTTP requests
 flask==3.0.0
 
-# OpenAI - For AI-powered responses (optional)
-# Only needed if you want to use the AI fallback feature
-# Comment out this line if you don't want to use AI
+# OpenAI - For AI-powered responses (optional - for OpenAI provider)
+# Only needed if LLM_PROVIDER = "openai" in config.py
 openai==1.12.0
+
+# Google Generative AI - For Gemini models (optional)
+# Only needed if LLM_PROVIDER = "gemini" in config.py
+google-generativeai==0.4.0
+
+# Requests - For HTTP API calls (Groq and Gemini REST fallback)
+requests==2.31.0
 
 # Werkzeug - WSGI utilities (comes with Flask)
 werkzeug==3.0.1
