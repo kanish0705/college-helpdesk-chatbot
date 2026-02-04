@@ -1,0 +1,18 @@
+# Requirements for College Helpdesk Chatbot
+# Install these packages using: pip install -r requirements.txt
+
+# Flask - Web framework for Python
+# Used to create the web server and handle HTTP requests
+flask==3.0.0
+
+# OpenAI - For AI-powered responses (optional)
+# Only needed if you want to use the AI fallback feature
+# Comment out this line if you don't want to use AI
+openai==1.12.0
+
+# Werkzeug - WSGI utilities (comes with Flask)
+werkzeug==3.0.1
+
+# python-dotenv - For loading environment variables (optional)
+# Useful for keeping API keys secure
+python-dotenv==1.0.0

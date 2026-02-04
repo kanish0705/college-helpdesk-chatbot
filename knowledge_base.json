@@ -1,0 +1,306 @@
+{
+    "intents": [
+        {
+            "tag": "greeting",
+            "patterns": [
+                "hello", "hi", "hey", "good morning", "good afternoon",
+                "good evening", "hi there", "greetings", "howdy"
+            ],
+            "responses": [
+                "Hello! Welcome to the College Helpdesk. How can I assist you today?",
+                "Hi there! I'm here to help with your college-related queries.",
+                "Greetings! How may I help you with college information?"
+            ]
+        },
+        {
+            "tag": "goodbye",
+            "patterns": [
+                "bye", "goodbye", "see you", "take care", "thanks bye",
+                "thank you bye", "exit", "quit"
+            ],
+            "responses": [
+                "Goodbye! Feel free to come back if you have more questions.",
+                "Take care! Have a great day ahead.",
+                "Bye! Don't hesitate to ask if you need any help later."
+            ]
+        },
+        {
+            "tag": "thanks",
+            "patterns": [
+                "thank you", "thanks", "thanks a lot", "thank you so much",
+                "appreciate it", "helpful", "great help"
+            ],
+            "responses": [
+                "You're welcome! Is there anything else I can help with?",
+                "Happy to help! Let me know if you have more questions.",
+                "Glad I could assist! Feel free to ask anything else."
+            ]
+        },
+        {
+            "tag": "admission_process",
+            "patterns": [
+                "how to get admission", "admission process", "how to apply",
+                "application process", "how can i join", "enrollment process",
+                "admission requirements", "how to enroll", "join college"
+            ],
+            "responses": [
+                "To apply for admission:\n1. Visit our college website\n2. Fill out the online application form\n3. Upload required documents (10th & 12th marksheets, ID proof)\n4. Pay the application fee\n5. Appear for the entrance test/interview if applicable\n\nFor more details, visit the Admissions Office or call: 1800-XXX-XXXX"
+            ]
+        },
+        {
+            "tag": "admission_dates",
+            "patterns": [
+                "admission dates", "when does admission start",
+                "admission deadline", "last date for admission",
+                "admission open", "when can i apply"
+            ],
+            "responses": [
+                "Admission Schedule:\n- Application Start: June 1st\n- Application Deadline: July 31st\n- Entrance Test: August 10th\n- Results: August 20th\n- Counseling: August 25th - September 5th\n\nPlease check the official website for the latest updates."
+            ]
+        },
+        {
+            "tag": "courses_offered",
+            "patterns": [
+                "what courses are available", "courses offered", "programs available",
+                "list of courses", "what can i study", "departments",
+                "branches available", "streams offered", "degree programs"
+            ],
+            "responses": [
+                "We offer the following programs:\n\n**Undergraduate (UG):**\n- B.Tech (CSE, ECE, ME, CE, EEE)\n- BBA, BCA, B.Com, B.Sc\n\n**Postgraduate (PG):**\n- M.Tech, MBA, MCA, M.Sc\n\n**Diploma Courses:**\n- Computer Science, Mechanical, Electrical\n\nFor detailed curriculum, visit the Academics section on our website."
+            ]
+        },
+        {
+            "tag": "fee_structure",
+            "patterns": [
+                "fee structure", "how much is the fee", "tuition fee",
+                "course fee", "fees", "cost of course", "semester fee",
+                "annual fee", "fee details", "fee payment"
+            ],
+            "responses": [
+                "Fee Structure (Per Year):\n\n**B.Tech Programs:** ₹85,000 - ₹1,20,000\n**BBA/BCA/B.Com:** ₹45,000 - ₹60,000\n**M.Tech/MBA:** ₹1,00,000 - ₹1,50,000\n**Hostel Fee:** ₹50,000 - ₹70,000\n\nNote: Fees may vary by specialization. Scholarships available for meritorious students. Contact the Fee Section for exact amounts."
+            ]
+        },
+        {
+            "tag": "scholarships",
+            "patterns": [
+                "scholarship", "financial aid", "fee concession",
+                "merit scholarship", "scholarship schemes", "fee waiver",
+                "scholarship eligibility", "how to get scholarship"
+            ],
+            "responses": [
+                "Scholarship Programs Available:\n\n1. **Merit Scholarship:** Up to 50% fee waiver for top performers\n2. **SC/ST Scholarship:** Government-funded assistance\n3. **Sports Scholarship:** For state/national level athletes\n4. **Need-based Aid:** For economically weaker sections\n\nEligibility: Minimum 75% in qualifying exam\nApplication: Submit scholarship form with documents to the Scholarship Cell."
+            ]
+        },
+        {
+            "tag": "college_timings",
+            "patterns": [
+                "college timings", "what time does college start",
+                "working hours", "class timings", "college hours",
+                "when does college open", "office hours", "timing"
+            ],
+            "responses": [
+                "College Timings:\n\n**Classes:** 9:00 AM - 4:30 PM (Monday to Friday)\n**Saturday:** 9:00 AM - 1:00 PM (Labs/Extra classes)\n**Office Hours:** 9:00 AM - 5:00 PM\n**Library:** 8:00 AM - 8:00 PM\n\nNote: Timings may vary during exams and holidays."
+            ]
+        },
+        {
+            "tag": "timetable",
+            "patterns": [
+                "timetable", "class schedule", "time table", "lecture schedule",
+                "weekly timetable", "class timetable", "when is my class",
+                "show timetable", "daily schedule", "period schedule"
+            ],
+            "responses": [
+                "CLASS TIMETABLE (Updated: February 2026)\n\n**PERIOD TIMINGS:**\n- Period 1: 9:00 AM - 9:50 AM\n- Period 2: 9:50 AM - 10:40 AM\n- Break: 10:40 AM - 11:00 AM\n- Period 3: 11:00 AM - 11:50 AM\n- Period 4: 11:50 AM - 12:40 PM\n- Lunch: 12:40 PM - 1:30 PM\n- Period 5: 1:30 PM - 2:20 PM\n- Period 6: 2:20 PM - 3:10 PM\n- Period 7: 3:10 PM - 4:00 PM\n\n**B.TECH CSE (3rd Year - Section A):**\n- Monday: DBMS (Room 301), OS (Room 302), Lab (Lab 1)\n- Tuesday: CN (Room 303), SE (Room 301), DBMS (Room 301)\n- Wednesday: OS Lab (Lab 2), CN (Room 303), SE (Room 302)\n- Thursday: DBMS (Room 301), CN (Room 303), OS (Room 302)\n- Friday: SE (Room 301), Mini Project (Lab 1), Library\n\nFor other departments, please check the notice board or student portal."
+            ]
+        },
+        {
+            "tag": "room_numbers",
+            "patterns": [
+                "room number", "room location", "where is room", "classroom location",
+                "which room", "room details", "class room", "lecture hall",
+                "lab room", "find room", "room 301", "room 302", "room 303"
+            ],
+            "responses": [
+                "ROOM & BUILDING DIRECTORY (Updated: February 2026)\n\n**MAIN ACADEMIC BLOCK:**\n- Ground Floor: Room 101-110 (1st Year Classes)\n- 1st Floor: Room 201-210 (2nd Year Classes)\n- 2nd Floor: Room 301-310 (3rd Year Classes)\n- 3rd Floor: Room 401-410 (4th Year & PG Classes)\n\n**LABORATORY BLOCK:**\n- Lab 1: Computer Lab (Ground Floor)\n- Lab 2: Operating Systems Lab (1st Floor)\n- Lab 3: Networking Lab (1st Floor)\n- Lab 4: Electronics Lab (2nd Floor)\n- Lab 5: Physics Lab (2nd Floor)\n- Lab 6: Chemistry Lab (Ground Floor)\n\n**SPECIAL ROOMS:**\n- Seminar Hall 1: Main Block, 2nd Floor\n- Seminar Hall 2: Library Building, 1st Floor\n- Auditorium: Separate Building (500 capacity)\n- HOD Cabins: Respective Department Floors\n- Administrative Office: Main Block, Ground Floor\n\n**QUICK REFERENCE:**\n- Room 301: DBMS, SE Classes\n- Room 302: OS Classes\n- Room 303: Computer Networks\n- Room 304: Data Structures\n- Room 305: Software Engineering"
+            ]
+        },
+        {
+            "tag": "contact_info",
+            "patterns": [
+                "contact number", "phone number", "email address",
+                "how to contact", "college address", "location",
+                "where is the college", "contact details"
+            ],
+            "responses": [
+                "Contact Information:\n\n**Address:** 123 College Road, City Name, State - 500001\n**Phone:** +91-XXXX-XXXXXX\n**Email:** info@abccollege.edu.in\n**Website:** www.abccollege.edu.in\n\n**Quick Contacts:**\n- Admissions: admissions@abccollege.edu.in\n- Exams: exams@abccollege.edu.in\n- Placements: placements@abccollege.edu.in"
+            ]
+        },
+        {
+            "tag": "hostel_info",
+            "patterns": [
+                "hostel facility", "hostel available", "accommodation",
+                "hostel fees", "hostel rules", "boys hostel", "girls hostel",
+                "hostel admission", "staying facility"
+            ],
+            "responses": [
+                "Hostel Facilities:\n\n**Boys Hostel:** 3 blocks, 500+ capacity\n**Girls Hostel:** 2 blocks, 300+ capacity\n\n**Amenities:**\n- Wi-Fi enabled\n- 24/7 security\n- Mess facility\n- Common room with TV\n- Laundry service\n\n**Fee:** ₹50,000 - ₹70,000 per year\n\nTo apply, submit hostel application with admission form."
+            ]
+        },
+        {
+            "tag": "placement_info",
+            "patterns": [
+                "placement", "campus recruitment", "job placement",
+                "companies visiting", "placement statistics", "placement record",
+                "career opportunities", "placement cell"
+            ],
+            "responses": [
+                "Placement Highlights:\n\n**Placement Rate:** 85%+ for eligible students\n**Highest Package:** ₹24 LPA\n**Average Package:** ₹5.5 LPA\n\n**Top Recruiters:**\nTCS, Infosys, Wipro, Cognizant, Accenture, Amazon, Microsoft, Deloitte\n\n**Placement Cell Contact:** placements@abccollege.edu.in\n\nTraining programs and mock interviews conducted for students."
+            ]
+        },
+        {
+            "tag": "library_info",
+            "patterns": [
+                "library", "library timings", "library facilities",
+                "books available", "digital library", "library card",
+                "how to issue books", "e-resources"
+            ],
+            "responses": [
+                "Library Facilities:\n\n**Timings:** 8:00 AM - 8:00 PM (All days)\n**Collection:** 50,000+ books, journals, magazines\n\n**Services:**\n- Book lending (max 3 books for 14 days)\n- Digital library with e-books\n- Online journals access\n- Reading halls\n- Photocopying service\n\n**To get Library Card:** Submit passport photo and ID to library desk."
+            ]
+        },
+        {
+            "tag": "exam_schedule",
+            "patterns": [
+                "exam schedule", "when are exams", "exam dates",
+                "examination timetable", "semester exams", "internal exams",
+                "exam pattern", "how many exams"
+            ],
+            "responses": [
+                "Examination Schedule:\n\n**Internal Exams:** 2 per semester (Mid-term & Pre-final)\n**Semester End Exams:** December (Odd Sem), May (Even Sem)\n\n**Exam Pattern:**\n- Internal Assessment: 30 marks\n- External Exam: 70 marks\n\nDetailed timetable is published 2 weeks before exams on the notice board and website."
+            ]
+        },
+        {
+            "tag": "faculty_info",
+            "patterns": [
+                "faculty", "teachers", "professors", "staff",
+                "who teaches", "faculty members", "teaching staff",
+                "hod", "department head"
+            ],
+            "responses": [
+                "Faculty Information:\n\n**Total Faculty:** 150+ experienced professors\n**PhD Holders:** 60%\n**Industry Experienced:** 40%\n\nEach department has qualified HODs and assistant professors. Faculty details are available on the college website under 'Faculty' section.\n\nFor specific faculty queries, contact the respective department office."
+            ]
+        },
+        {
+            "tag": "transport",
+            "patterns": [
+                "bus facility", "transport", "college bus",
+                "bus routes", "bus fee", "transportation",
+                "bus timings", "how to reach college"
+            ],
+            "responses": [
+                "Transport Facility:\n\n**College Buses:** 15+ buses covering major areas\n**Bus Fee:** ₹15,000 - ₹25,000 per year (based on distance)\n\n**Bus Timings:**\n- Morning Pickup: 7:30 AM onwards\n- Evening Drop: 5:00 PM\n\n**Routes Available:** City center, Railway station, Major residential areas\n\nContact Transport Office for route details and registration."
+            ]
+        },
+        {
+            "tag": "attendance",
+            "patterns": [
+                "attendance", "attendance requirement", "minimum attendance",
+                "attendance percentage", "attendance shortage",
+                "how much attendance required"
+            ],
+            "responses": [
+                "Attendance Policy:\n\n**Minimum Required:** 75% attendance in each subject\n**Condonation:** Up to 10% can be condoned for medical reasons\n\n**Below 65%:** Not eligible to appear for exams\n**65-74%:** Condonation fee applicable\n\n**Note:** Attendance is tracked biometrically. Check your attendance on the student portal regularly."
+            ]
+        },
+        {
+            "tag": "events",
+            "patterns": [
+                "college events", "fest", "cultural events", "technical fest",
+                "annual day", "sports day", "competitions", "college festival"
+            ],
+            "responses": [
+                "College Events:\n\n**Annual Technical Fest:** TechnoVista (February)\n**Cultural Fest:** Rhythm (March)\n**Sports Meet:** Annual Sports Day (January)\n**Workshops:** Monthly technical workshops\n\n**Clubs & Activities:**\n- Coding Club\n- Robotics Club\n- Music & Dance Club\n- NSS & NCC\n\nFollow our social media pages for event updates!"
+            ]
+        },
+        {
+            "tag": "certificates",
+            "patterns": [
+                "certificate", "get certificate", "bonafide certificate",
+                "transfer certificate", "character certificate",
+                "provisional certificate", "original certificate"
+            ],
+            "responses": [
+                "Certificate Requests:\n\n**Available Certificates:**\n- Bonafide Certificate\n- Transfer Certificate (TC)\n- Character Certificate\n- Study Certificate\n- Course Completion Certificate\n\n**Process:**\n1. Apply online through student portal OR\n2. Submit application at Administrative Office\n3. Processing time: 2-3 working days\n4. Collect with valid ID proof\n\n**Fee:** ₹50 - ₹200 depending on certificate type"
+            ]
+        },
+        {
+            "tag": "student_portal",
+            "patterns": [
+                "student portal", "login", "student login",
+                "how to access portal", "erp", "student erp",
+                "online portal", "check results online"
+            ],
+            "responses": [
+                "Student Portal Access:\n\n**URL:** portal.abccollege.edu.in\n**Login ID:** Your enrollment number\n**Default Password:** DOB (DDMMYYYY format)\n\n**Portal Features:**\n- View attendance\n- Check results\n- Fee payment\n- Course registration\n- Download study materials\n\n**Forgot Password?** Click 'Forgot Password' or contact IT Help Desk."
+            ]
+        },
+        {
+            "tag": "wifi",
+            "patterns": [
+                "wifi", "internet", "wifi password", "wifi access",
+                "connect to wifi", "campus wifi", "internet facility"
+            ],
+            "responses": [
+                "Campus Wi-Fi:\n\n**Network Name:** ABC-Campus-WiFi\n**Access:** Use your student portal credentials\n\n**Coverage:** All academic blocks, library, hostels\n**Speed:** Up to 50 Mbps\n\n**Note:** Social media sites may be restricted during class hours. For connectivity issues, contact IT Help Desk at Block A, Ground Floor."
+            ]
+        },
+        {
+            "tag": "canteen",
+            "patterns": [
+                "canteen", "food", "cafeteria", "mess",
+                "canteen timings", "food court", "where to eat"
+            ],
+            "responses": [
+                "Canteen & Food Facilities:\n\n**Main Canteen:** Near Admin Block\n**Timings:** 8:00 AM - 6:00 PM\n\n**Available:**\n- Breakfast, Lunch, Snacks\n- South Indian, North Indian, Chinese options\n- Vegetarian & Non-vegetarian\n\n**Hostel Mess:** Separate timing for hostel students\n\n**Food Court:** Multiple vendors near sports ground"
+            ]
+        },
+        {
+            "tag": "sports",
+            "patterns": [
+                "sports", "sports facility", "playground", "gym",
+                "sports activities", "indoor games", "outdoor games"
+            ],
+            "responses": [
+                "Sports Facilities:\n\n**Outdoor:**\n- Cricket ground\n- Football field\n- Basketball court\n- Tennis court\n- Athletic track\n\n**Indoor:**\n- Badminton courts\n- Table tennis\n- Chess room\n- Gym facility\n\n**Sports Officer:** Mr. Rajesh (Sports Block)\n**Timings:** 6:00 AM - 7:00 PM\n\nAnnual sports meet and inter-college tournaments conducted."
+            ]
+        },
+        {
+            "tag": "anti_ragging",
+            "patterns": [
+                "ragging", "anti ragging", "harassment", "ragging complaint",
+                "ragging helpline", "report ragging", "bullying"
+            ],
+            "responses": [
+                "Anti-Ragging Policy:\n\n**Ragging is strictly prohibited and punishable!**\n\n**Helpline:** 1800-XXX-XXXX (24x7)\n**Email:** antiragging@abccollege.edu.in\n\n**Complaint Options:**\n- Anti-Ragging Committee (Admin Block)\n- Online complaint portal\n- Anonymous complaint box\n\n**Punishment:** Suspension to expulsion based on severity\n\nDon't hesitate to report. Your identity will be protected."
+            ]
+        },
+        {
+            "tag": "documents_required",
+            "patterns": [
+                "documents required", "what documents needed",
+                "admission documents", "required documents",
+                "documents for admission", "document list"
+            ],
+            "responses": [
+                "Documents Required for Admission:\n\n**Mandatory:**\n1. 10th & 12th Marksheets (Original + 2 copies)\n2. Transfer Certificate\n3. Migration Certificate (if applicable)\n4. Passport size photos (6 nos)\n5. Aadhar Card copy\n6. Caste Certificate (if applicable)\n\n**Additional:**\n- Income Certificate (for scholarships)\n- Entrance exam scorecard\n- Gap Certificate (if applicable)\n\nBring originals for verification."
+            ]
+        }
+    ],
+    "college_info": {
+        "name": "Jain University",
+        "established": "1995",
+        "type": "Private",
+        "affiliation": "State Technical University",
+        "accreditation": "NAAC 'A' Grade, NBA Accredited"
+    }
+}

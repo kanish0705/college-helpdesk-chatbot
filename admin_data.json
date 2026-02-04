@@ -1,0 +1,511 @@
+{
+    "departments": [
+        {
+            "id": "BCA",
+            "name": "Bachelor of Computer Applications"
+        },
+        {
+            "id": "BSC_CS",
+            "name": "B.Sc Computer Science"
+        },
+        {
+            "id": "ECE",
+            "name": "Electronics & Communication"
+        },
+        {
+            "id": "ME",
+            "name": "Mechanical Engineering"
+        },
+        {
+            "id": "MBA",
+            "name": "Master of Business Administration"
+        },
+        {
+            "id": "BCOM",
+            "name": "bba"
+        }
+    ],
+    "semesters": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8"
+    ],
+    "sections": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E"
+    ],
+    "timetables": {
+        "BCA_3_A": {
+            "Friday": [
+                "Mini Project - Lab 1",
+                "DBMS - Room 501",
+                "Sports"
+            ],
+            "Monday": [
+                "DBMS - Room 501",
+                "Programming in Java - Room 502",
+                "DS Lab - Lab 1"
+            ],
+            "Thursday": [
+                "Web Technology - Room 503",
+                "Data Structures - Room 501",
+                "Seminar"
+            ],
+            "Tuesday": [
+                "Data Structures - Room 501",
+                "Web Technology - Room 503",
+                "Java Lab - Lab 1"
+            ],
+            "Wednesday": [
+                "DBMS Lab - Lab 1",
+                "Programming in Java - Room 502",
+                "Library"
+            ]
+        },
+        "BCA_3_C": {
+            "Friday": [
+                "Mini Project - Lab 2",
+                "Web Technology - Room 507",
+                "Sports"
+            ],
+            "Monday": [
+                "Programming in Java - Room 505",
+                "DBMS - Room 506",
+                "Web Tech Lab - Lab 3"
+            ],
+            "Thursday": [
+                "Data Structures - Room 505",
+                "Programming in Java - Room 506",
+                "Seminar"
+            ],
+            "Tuesday": [
+                "DBMS - Room 506",
+                "Data Structures - Room 505",
+                "Java Lab - Lab 2"
+            ],
+            "Wednesday": [
+                "Web Technology - Room 507",
+                "DBMS Lab - Lab 3",
+                "Library"
+            ]
+        },
+        "BSC_CS_2_A": {
+            "Friday": [
+                "Physics - Room 203",
+                "Seminar",
+                "Sports"
+            ],
+            "Monday": [
+                "C Programming - Room 201",
+                "Mathematics - Room 202",
+                "Physics - Room 203"
+            ],
+            "Thursday": [
+                "English - Room 204",
+                "C Programming - Room 201",
+                "Mathematics - Room 202"
+            ],
+            "Tuesday": [
+                "Physics Lab - Lab 5",
+                "C Programming - Room 201",
+                "English - Room 204"
+            ],
+            "Wednesday": [
+                "Mathematics - Room 202",
+                "C Lab - Lab 1",
+                "Library"
+            ]
+        },
+        "CSE_3_A": {
+            "Friday": [
+                "Software Engg - Room 301",
+                "Mini Project - Lab 1",
+                "Library"
+            ],
+            "Monday": [
+                "DBMS - Room 301",
+                "OS - Room 302",
+                "CN Lab - Lab 1"
+            ],
+            "Thursday": [
+                "DBMS - Room 301",
+                "Computer Networks - Room 303",
+                "OS - Room 302"
+            ],
+            "Tuesday": [
+                "Computer Networks - Room 303",
+                "Software Engg - Room 301",
+                "DBMS - Room 301"
+            ],
+            "Wednesday": [
+                "OS Lab - Lab 2",
+                "Computer Networks - Room 303",
+                "Software Engg - Room 302"
+            ]
+        }
+    },
+    "room_directory": {
+        "101": {
+            "capacity": 60,
+            "floor": "1st Floor",
+            "type": "Classroom",
+            "wing": "A Wing"
+        },
+        "102": {
+            "capacity": 60,
+            "floor": "1st Floor",
+            "type": "Classroom",
+            "wing": "A Wing"
+        },
+        "201": {
+            "capacity": 60,
+            "floor": "2nd Floor",
+            "type": "Classroom",
+            "wing": "A Wing"
+        },
+        "202": {
+            "capacity": 60,
+            "floor": "2nd Floor",
+            "type": "Classroom",
+            "wing": "A Wing"
+        },
+        "203": {
+            "capacity": 50,
+            "floor": "2nd Floor",
+            "type": "Classroom",
+            "wing": "B Wing"
+        },
+        "204": {
+            "capacity": 50,
+            "floor": "2nd Floor",
+            "type": "Classroom",
+            "wing": "B Wing"
+        },
+        "301": {
+            "capacity": 60,
+            "floor": "3rd Floor",
+            "type": "Classroom",
+            "wing": "A Wing"
+        },
+        "302": {
+            "capacity": 60,
+            "floor": "3rd Floor",
+            "type": "Classroom",
+            "wing": "A Wing"
+        },
+        "303": {
+            "capacity": 50,
+            "floor": "3rd Floor",
+            "type": "Classroom",
+            "wing": "B Wing"
+        },
+        "501": {
+            "capacity": 60,
+            "floor": "5th Floor",
+            "type": "BCA Classroom",
+            "wing": "A Wing"
+        },
+        "502": {
+            "capacity": 60,
+            "floor": "5th Floor",
+            "type": "BCA Classroom",
+            "wing": "A Wing"
+        },
+        "505": {
+            "capacity": 50,
+            "floor": "5th Floor",
+            "type": "BCA Classroom",
+            "wing": "B Wing"
+        },
+        "506": {
+            "capacity": 50,
+            "floor": "5th Floor",
+            "type": "BCA Classroom",
+            "wing": "B Wing"
+        },
+        "507": {
+            "capacity": 40,
+            "floor": "5th Floor",
+            "type": "BCA Classroom",
+            "wing": "C Wing"
+        },
+        "808": {
+            "capacity": 100,
+            "floor": "8th Floor",
+            "type": "Seminar Hall",
+            "wing": "A Wing"
+        },
+        "809": {
+            "capacity": 30,
+            "floor": "8th Floor",
+            "type": "Conference Room",
+            "wing": "B Wing"
+        },
+        "Lab 1": {
+            "capacity": 40,
+            "floor": "Ground Floor",
+            "type": "Computer Lab",
+            "wing": "Lab Block"
+        },
+        "Lab 2": {
+            "capacity": 40,
+            "floor": "1st Floor",
+            "type": "Programming Lab",
+            "wing": "Lab Block"
+        },
+        "Lab 3": {
+            "capacity": 35,
+            "floor": "2nd Floor",
+            "type": "Web Technology Lab",
+            "wing": "Lab Block"
+        },
+        "Lab 4": {
+            "capacity": 30,
+            "floor": "2nd Floor",
+            "type": "Electronics Lab",
+            "wing": "Lab Block"
+        },
+        "Lab 5": {
+            "capacity": 30,
+            "floor": "3rd Floor",
+            "type": "Physics Lab",
+            "wing": "Lab Block"
+        }
+    },
+    "notifications": [
+        {
+            "date": "2026-02-02",
+            "id": 1,
+            "message": "DBMS class for BCA 3rd Sem Section C is cancelled today due to faculty meeting.",
+            "priority": "high",
+            "target": {
+                "dept": "BCA",
+                "section": "C",
+                "semester": "3"
+            },
+            "title": "Class Cancelled",
+            "type": "class"
+        },
+        {
+            "date": "2026-02-01",
+            "id": 2,
+            "message": "Mid-term exams will be held from February 15-20, 2026. Timetable available on notice board.",
+            "priority": "high",
+            "target": {
+                "dept": "all",
+                "section": "all",
+                "semester": "all"
+            },
+            "title": "Mid-Term Exam Schedule",
+            "type": "exam"
+        },
+        {
+            "date": "2026-02-02",
+            "id": 3,
+            "message": "Java Programming Assignment 3 submission deadline: February 5, 2026 by 5 PM.",
+            "priority": "medium",
+            "target": {
+                "dept": "BCA",
+                "section": "all",
+                "semester": "3"
+            },
+            "title": "Assignment Deadline",
+            "type": "activity"
+        },
+        {
+            "date": "2026-02-01",
+            "id": 4,
+            "message": "Register for TechnoVista 2026! Last date: February 10. Visit Events Cell.",
+            "priority": "low",
+            "target": {
+                "dept": "all",
+                "section": "all",
+                "semester": "all"
+            },
+            "title": "Tech Fest Registration",
+            "type": "event"
+        },
+        {
+            "date": "2026-02-02",
+            "id": 5,
+            "message": "Extra class for Computer Networks on Saturday 9 AM in Room 303.",
+            "priority": "medium",
+            "target": {
+                "dept": "CSE",
+                "section": "A",
+                "semester": "3"
+            },
+            "title": "Extra Class",
+            "type": "class"
+        }
+    ],
+    "faculty": {
+        "BCA": [
+            {
+                "cabin": "Room 510",
+                "name": "Prof. Sharma",
+                "subject": "Programming in Java"
+            },
+            {
+                "cabin": "Room 511",
+                "name": "Prof. Gupta",
+                "subject": "DBMS"
+            },
+            {
+                "cabin": "Room 512",
+                "name": "Prof. Verma",
+                "subject": "Web Technology"
+            }
+        ],
+        "CSE": [
+            {
+                "cabin": "Room 310",
+                "name": "Dr. Kumar",
+                "subject": "Operating Systems"
+            },
+            {
+                "cabin": "Room 311",
+                "name": "Prof. Singh",
+                "subject": "Computer Networks"
+            },
+            {
+                "cabin": "Room 312",
+                "name": "Prof. Patel",
+                "subject": "DBMS"
+            }
+        ]
+    },
+    "exam_schedule": {
+        "even_semester_exams": "May",
+        "internal_exams": "2 per semester (Mid-term & Pre-final)",
+        "odd_semester_exams": "December",
+        "upcoming": [
+            {
+                "date": "February 15-20, 2026",
+                "name": "Mid-Term Exams",
+                "target": "all"
+            },
+            {
+                "date": "February 25, 2026",
+                "name": "BCA 3rd Sem Practical",
+                "target": "BCA_3"
+            },
+            {
+                "date": "March 1-5, 2026",
+                "name": "CSE Internal Assessment",
+                "target": "CSE"
+            }
+        ]
+    },
+    "contact_info": {
+        "address": "123 College Road, City Name, State - 500001",
+        "admissions_email": "admissions@abccollege.edu.in",
+        "email": "info@abccollege.edu.in",
+        "exams_email": "exams@abccollege.edu.in",
+        "phone": "+91-XXXX-XXXXXX",
+        "placements_email": "placements@abccollege.edu.in",
+        "website": "www.abccollege.edu.in"
+    },
+    "fee_structure": {
+        "B.Sc": "Rs. 35,000 - 45,000 per year",
+        "B.Tech/B.E": "Rs. 85,000 - 1,20,000 per year",
+        "BCA": "Rs. 45,000 - 55,000 per year",
+        "Hostel Fee": "Rs. 50,000 - 70,000 per year",
+        "MBA": "Rs. 1,00,000 - 1,50,000 per year"
+    },
+    "custom_sections": [
+        {
+            "content": "**Sports Facilities:**\n- Cricket Ground\n- Football Field\n- Basketball Court\n- Gymnasium\n- Table Tennis\n\n**Timings:** 6-8 AM & 5-7 PM\n**Contact:** sports@abccollege.edu.in",
+            "keywords": [
+                "sports",
+                "gym",
+                "playground",
+                "fitness",
+                "games",
+                "cricket",
+                "football"
+            ],
+            "name": "Sports Facilities"
+        },
+        {
+            "content": "**College Canteen:**\n- Location: Main Building, Ground Floor\n- Timings: 8 AM - 6 PM\n- Offers: Breakfast, Lunch, Snacks\n\n**Hostel Mess:** 3 meals/day for hostel students",
+            "keywords": [
+                "canteen",
+                "food",
+                "cafeteria",
+                "lunch",
+                "breakfast",
+                "mess"
+            ],
+            "name": "Canteen"
+        },
+        {
+            "content": "**Library Facilities:**\n- Timings: 8 AM - 8 PM (All days)\n- Books: 50,000+ collection\n- E-Library available\n- Max 3 books for 14 days\n\n**Location:** Library Building, Next to Main Block",
+            "keywords": [
+                "library",
+                "books",
+                "study",
+                "reading",
+                "borrow"
+            ],
+            "name": "Library"
+        }
+    ],
+    "period_timings": [
+        {
+            "end": "9:50 AM",
+            "period": 1,
+            "start": "9:00 AM"
+        },
+        {
+            "end": "10:40 AM",
+            "period": 2,
+            "start": "9:50 AM"
+        },
+        {
+            "end": "11:00 AM",
+            "period": "Break",
+            "start": "10:40 AM"
+        },
+        {
+            "end": "11:50 AM",
+            "period": 3,
+            "start": "11:00 AM"
+        },
+        {
+            "end": "12:40 PM",
+            "period": 4,
+            "start": "11:50 AM"
+        },
+        {
+            "end": "1:30 PM",
+            "period": "Lunch",
+            "start": "12:40 PM"
+        },
+        {
+            "end": "2:20 PM",
+            "period": 5,
+            "start": "1:30 PM"
+        },
+        {
+            "end": "3:10 PM",
+            "period": 6,
+            "start": "2:20 PM"
+        },
+        {
+            "end": "4:00 PM",
+            "period": 7,
+            "start": "3:10 PM"
+        }
+    ],
+    "last_updated": "04/02/2026, 21:07:46",
+    "updated_by": "Admin"
+}

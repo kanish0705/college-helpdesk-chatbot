@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+============================================================================
+AI-Powered College Helpdesk Chatbot - Admin Panel
+============================================================================
+Title: AI-Powered College Helpdesk Chatbot with Controlled Knowledge Scope
+Purpose: Admin interface for managing college data
+
+DESIGN DECISIONS:
+- Sidebar-based layout for easy navigation
+- Left sidebar with section navigation
+- Active section highlighted for clarity
+- Cards with rounded corners and soft shadows
+- Forms are clean, aligned, and simple
+- Primary buttons for Add/Update actions
+- Danger (red) buttons only for Remove actions
+
+COLOR SCHEME:
+- Primary: Deep academic blue (#1e3a8a)
+- Secondary background: Light gray (#f8fafc)
+- Accent: Soft blue (#3b82f6)
+- Danger: Soft red (#dc2626) - only for delete actions
+
+============================================================================
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - {{ college_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+    
+    <!-- ================================================================
+         ADMIN WRAPPER
+         Flexbox layout with sidebar and main content area
+         ================================================================ -->
+    <div class="admin-wrapper">
+        
+        <!-- ============================================================
+             LEFT SIDEBAR NAVIGATION
+             Contains all admin sections for easy access
+             Active section is highlighted
+             ============================================================ -->
+        <aside class="sidebar">
+            
+            <!-- Sidebar Header with College Name -->
+            <div class="sidebar-header">
+                <h1 class="sidebar-title">Admin Panel</h1>
+                <p class="sidebar-subtitle">{{ college_name }}</p>
+            </div>
+            
+            <!-- Navigation Menu -->
+            <nav class="sidebar-nav">
+                <ul class="nav-list">
+                    <!-- Main Admin Sections -->
+                    <li class="nav-item">
+                        <a href="#departments" class="nav-link active" onclick="showSection('departments')">
+                            <span class="nav-icon">D</span>
+                            Departments
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#timetable" class="nav-link" onclick="showSection('timetable')">
+                            <span class="nav-icon">T</span>
+                            Timetables
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#rooms" class="nav-link" onclick="showSection('rooms')">
+                            <span class="nav-icon">R</span>
+                            Rooms
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#faculty" class="nav-link" onclick="showSection('faculty')">
+                            <span class="nav-icon">F</span>
+                            Faculty
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#exams" class="nav-link" onclick="showSection('exams')">
+                            <span class="nav-icon">E</span>
+                            Exams
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#notifications" class="nav-link" onclick="showSection('notifications')">
+                            <span class="nav-icon">N</span>
+                            Notifications
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#fees" class="nav-link" onclick="showSection('fees')">
+                            <span class="nav-icon">$</span>
+                            Fees
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#contact" class="nav-link" onclick="showSection('contact')">
+                            <span class="nav-icon">C</span>
+                            Contact Info
+                        </a>
+                    </li>
+                    
+                    <!-- Divider -->
+                    <li class="nav-divider"></li>
+                    
+                    <!-- Custom Sections Header -->
+                    <li class="nav-header">Custom Sections</li>
+                    
+                    <!-- Dynamic Custom Sections (added via JS) -->
+                    <div id="customSectionsNav"></div>
+                    
+                    <li class="nav-item">
+                        <a href="#add-section" class="nav-link nav-link-add" onclick="showSection('add-section')">
+                            + Add New Section
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <!-- Sidebar Footer with Admin Info and Logout -->
+            <div class="sidebar-footer">
+                {% if admin_info %}
+                <div class="admin-info">
+                    <span class="admin-name">{{ admin_info.full_name }}</span>
+                    <span class="admin-role">{{ admin_info.role }}</span>
+                </div>
+                {% endif %}
+                <a href="{{ url_for('admin_logout') }}" class="logout-link">Logout</a>
+                <a href="/" class="back-link">Back to Chatbot</a>
+            </div>
+            
+        </aside>
+        
+        <!-- ============================================================
+             MAIN CONTENT AREA
+             Contains all section panels
+             Only one section visible at a time
+             ============================================================ -->
+        <main class="main-content">
+            
+            <!-- Content Header -->
+            <header class="content-header">
+                <h1>College Information Dashboard</h1>
+                <p class="header-desc">Manage college data for personalized student responses</p>
+                <p class="last-updated">Last Updated: <span id="lastUpdated">Loading...</span></p>
+            </header>
+            
+            <!-- ========================================================
+                 DEPARTMENTS SECTION
+                 Manage department list and configurations
+                 ======================================================== -->
+            <section id="departments" class="admin-section active">
+                <div class="section-header">
+                    <h2>Department Management</h2>
+                    <p class="section-desc">Add or remove departments. Students can select their department for personalized responses.</p>
+                </div>
+                
+                <div class="cards-row">
+                    <!-- Current Departments Card -->
+                    <div class="admin-card">
+                        <h3 class="card-title">Current Departments</h3>
+                        <div class="card-body" id="deptListContainer">
+                            <!-- Filled by JavaScript -->
+                            <p class="empty-state">No departments added yet.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Add Department Card -->
+                    <div class="admin-card">
+                        <h3 class="card-title">Add New Department</h3>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="newDeptId">Department ID</label>
+                                <input type="text" id="newDeptId" placeholder="e.g., BCA, MBA, ECE">
+                                <span class="form-hint">Short code (no spaces)</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="newDeptName">Department Name</label>
+                                <input type="text" id="newDeptName" placeholder="e.g., Bachelor of Computer Applications">
+                            </div>
+                            <button onclick="addDepartment()" class="btn btn-primary">Add Department</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Semester Configuration -->
+                <div class="admin-card">
+                    <h3 class="card-title">Semester Configuration</h3>
+                    <div class="card-body">
+                        <p class="section-desc">Configure available semesters (currently: 1-8)</p>
+                        <div class="inline-form">
+                            <input type="number" id="maxSemester" min="1" max="12" value="8" class="input-small">
+                            <button onclick="updateSemesters()" class="btn btn-secondary">Update Max Semester</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Section Configuration -->
+                <div class="admin-card">
+                    <h3 class="card-title">Section Configuration</h3>
+                    <div class="card-body">
+                        <p class="section-desc">Configure available sections</p>
+                        <div id="sectionsDisplay" class="tags-container">
+                            <!-- Filled by JavaScript -->
+                        </div>
+                        <div class="inline-form">
+                            <input type="text" id="newSection" placeholder="New Section (e.g., E)" class="input-small">
+                            <button onclick="addSection()" class="btn btn-secondary">Add Section</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- ========================================================
+                 TIMETABLE SECTION
+                 Manage class timetables
+                 ======================================================== -->
+            <section id="timetable" class="admin-section">
+                <div class="section-header">
+                    <h2>Timetable Management</h2>
+                    <p class="section-desc">Create and edit timetables for each Department/Semester/Section combination.</p>
+                </div>
+                
+                <div class="admin-card">
+                    <h3 class="card-title">Select Class</h3>
+                    <div class="card-body">
+                        <div class="inline-form">
+                            <select id="ttDept" onchange="loadTimetable()">
+                                <option value="">-- Select Department --</option>
+                            </select>
+                            <select id="ttSem" onchange="loadTimetable()">
+                                <option value="">-- Select Semester --</option>
+                            </select>
+                            <select id="ttSec" onchange="loadTimetable()">
+                                <option value="">-- Select Section --</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="timetableEditor" style="display: none;">
+                    <!-- Period Timings -->
+                    <div class="admin-card">
+                        <h3 class="card-title">Period Timings</h3>
+                        <div class="card-body">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Period</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="periodTimingsBody">
+                                    <!-- Filled by JavaScript -->
+                                </tbody>
+                            </table>
+                            <div class="inline-form">
+                                <input type="number" id="newPeriodNum" placeholder="Period #" class="input-small">
+                                <input type="time" id="newPeriodStart">
+                                <input type="time" id="newPeriodEnd">
+                                <button onclick="addPeriodTiming()" class="btn btn-secondary">Add Period</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Weekly Schedule -->
+                    <div class="admin-card">
+                        <h3 class="card-title">Weekly Schedule</h3>
+                        <div class="card-body">
+                            <p class="section-desc">Enter subjects for each day. Format: Subject - Room Number</p>
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Day</th>
+                                        <th>Period 1-2</th>
+                                        <th>Period 3-4</th>
+                                        <th>Period 5-7</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="scheduleBody">
+                                    <!-- Filled by JavaScript -->
+                                </tbody>
+                            </table>
+                            <button onclick="saveTimetable()" class="btn btn-primary">Save Timetable</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="noTimetable" class="info-box">
+                    <p>Select a Department, Semester, and Section to edit the timetable.</p>
+                </div>
+            </section>
+            
+            <!-- ========================================================
+                 ROOM DIRECTORY SECTION
+                 Manage room locations
+                 ======================================================== -->
+            <section id="rooms" class="admin-section">
+                <div class="section-header">
+                    <h2>Room Directory</h2>
+                    <p class="section-desc">Add room locations with floor, wing, and type information. Students can ask "Where is Room 808?"</p>
+                </div>
+                
+                <div class="admin-card">
+                    <h3 class="card-title">Room List</h3>
+                    <div class="card-body">
+                        <div class="search-box">
+                            <input type="text" id="roomSearch" placeholder="Search rooms..." onkeyup="searchRooms()">
+                        </div>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Room Number</th>
+                                    <th>Floor</th>
+                                    <th>Wing</th>
+                                    <th>Type</th>
+                                    <th>Capacity</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="roomsTableBody">
+                                <!-- Filled by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="admin-card">
+                    <h3 class="card-title">Add New Room</h3>
+                    <div class="card-body">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Room Number</label>
+                                <input type="text" id="newRoomNum" placeholder="e.g., 808">
+                            </div>
+                            <div class="form-group">
+                                <label>Floor</label>
+                                <input type="text" id="newRoomFloor" placeholder="e.g., 8th Floor">
+                            </div>
+                            <div class="form-group">
+                                <label>Wing</label>
+                                <input type="text" id="newRoomWing" placeholder="e.g., A Wing">
+                            </div>
+                            <div class="form-group">
+                                <label>Type</label>
+                                <select id="newRoomType">
+                                    <option value="Classroom">Classroom</option>
+                                    <option value="Lab">Lab</option>
+                                    <option value="Seminar Hall">Seminar Hall</option>
+                                    <option value="Library">Library</option>
+                                    <option value="Office">Office</option>
+                                    <option value="Auditorium">Auditorium</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Capacity</label>
+                                <input type="number" id="newRoomCapacity" placeholder="e.g., 60">
+                            </div>
+                        </div>
+                        <button onclick="addRoom()" class="btn btn-primary">Add Room</button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- ========================================================
+                 FACULTY SECTION
+                 Manage faculty information
+                 ======================================================== -->
+            <section id="faculty" class="admin-section">
+                <div class="section-header">
+                    <h2>Faculty Information</h2>
+                    <p class="section-desc">Add faculty details by department. Students can ask about their professors.</p>
+                </div>
+                
+                <div class="admin-card">
+                    <h3 class="card-title">Select Department</h3>
+                    <div class="card-body">
+                        <select id="facultyDept" onchange="loadFacultyList()">
+                            <option value="">-- Select Department --</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="facultyList">
+                    <!-- Filled by JavaScript -->
+                </div>
+                
+                <div class="admin-card">
+                    <h3 class="card-title">Add New Faculty</h3>
+                    <div class="card-body">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Faculty Name</label>
+                                <input type="text" id="newFacultyName" placeholder="e.g., Dr. John Smith">
+                            </div>
+                            <div class="form-group">
+                                <label>Subject</label>
+                                <input type="text" id="newFacultySubject" placeholder="e.g., Data Structures">
+                            </div>
+                            <div class="form-group">
+                                <label>Cabin Number</label>
+                                <input type="text" id="newFacultyCabin" placeholder="e.g., 205">
+                            </div>
+                        </div>
+                        <button onclick="addFaculty()" class="btn btn-primary">Add Faculty</button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- ========================================================
+                 EXAMS SECTION
+                 Manage exam schedules
+                 ======================================================== -->
+            <section id="exams" class="admin-section">
+                <div class="section-header">
+                    <h2>Examination Schedule</h2>
+                    <p class="section-desc">Configure exam schedules and upcoming exams.</p>
+                </div>
+                
+                <div class="admin-card">
+                    <h3 class="card-title">Exam Schedule Configuration</h3>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Internal Exams Info</label>
+                            <input type="text" id="examInternal" class="input-full" placeholder="e.g., Conducted twice per semester">
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Odd Semester Exams</label>
+                                <input type="text" id="examOdd" placeholder="e.g., November-December">
+                            </div>
+                            <div class="form-group">
+                                <label>Even Semester Exams</label>
+                                <input type="text" id="examEven" placeholder="e.g., April-May">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="admin-card">
+                    <h3 class="card-title">Upcoming Exams</h3>
+                    <div class="card-body">
+                        <div id="upcomingExamsList">
+                            <!-- Filled by JavaScript -->
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Exam Name</label>
+                                <input type="text" id="newExamName" placeholder="e.g., Mid-Term Exam">
+                            </div>
+                            <div class="form-group">
+                                <label>Date</label>
+                                <input type="date" id="newExamDate">
+                            </div>
+                            <div class="form-group">
+                                <label>Target</label>
+                                <select id="newExamTarget">
+                                    <option value="all">All Students</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button onclick="addUpcomingExam()" class="btn btn-secondary">Add Exam</button>
+                    </div>
+                </div>
+                
+                <button onclick="saveExamSchedule()" class="btn btn-primary">Save Exam Schedule</button>
+            </section>
+            
+            <!-- ========================================================
+                 NOTIFICATIONS SECTION
+                 Send targeted notifications
+                 ======================================================== -->
+            <section id="notifications" class="admin-section">
+                <div class="section-header">
+                    <h2>Notifications and Announcements</h2>
+                    <p class="section-desc">Send targeted notifications to specific departments, semesters, or sections.</p>
+                </div>
+                
+                <div class="admin-card">
+                    <h3 class="card-title">Active Notifications</h3>
+                    <div class="card-body" id="notificationsList">
+                        <!-- Filled by JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="admin-card">
+                    <h3 class="card-title">Create New Notification</h3>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" id="notifTitle" class="input-full" placeholder="e.g., Class Cancelled Tomorrow">
+                        </div>
+                        <div class="form-group">
+                            <label>Message</label>
+                            <textarea id="notifMessage" rows="3" class="input-full" placeholder="Detailed message..."></textarea>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Notification Type</label>
+                                <select id="notifType">
+                                    <option value="class">Class Update</option>
+                                    <option value="exam">Exam Notice</option>
+                                    <option value="activity">Activity/Event</option>
+                                    <option value="general">General</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Priority</label>
+                                <select id="notifPriority">
+                                    <option value="normal">Normal</option>
+                                    <option value="high">High (Important)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Target Audience</label>
+                            <div class="inline-form">
+                                <select id="notifDept">
+                                    <option value="all">All Departments</option>
+                                </select>
+                                <select id="notifSem">
+                                    <option value="all">All Semesters</option>
+                                </select>
+                                <select id="notifSec">
+                                    <option value="all">All Sections</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button onclick="addNotification()" class="btn btn-primary">Post Notification</button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- ========================================================
+                 FEES SECTION
+                 Manage fee structure
+                 ======================================================== -->
+            <section id="fees" class="admin-section">
+                <div class="section-header">
+                    <h2>Fee Structure</h2>
+                    <p class="section-desc">Manage fee information for different courses.</p>
+                </div>
+                
+                <div class="admin-card">
+                    <h3 class="card-title">Current Fee Structure</h3>
+                    <div class="card-body">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Course</th>
+                                    <th>Fee (Per Year)</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="feeTableBody">
+                                <!-- Filled by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="admin-card">
+                    <h3 class="card-title">Add/Edit Fee</h3>
+                    <div class="card-body">
+                        <div class="inline-form">
+                            <input type="text" id="feeCourse" placeholder="Course Name">
+                            <input type="text" id="feeAmount" placeholder="Fee Amount (e.g., Rs. 85,000)">
+                            <button onclick="saveFee()" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- ========================================================
+                 CONTACT INFO SECTION
+                 Manage contact information
+                 ======================================================== -->
+            <section id="contact" class="admin-section">
+                <div class="section-header">
+                    <h2>Contact Information</h2>
+                    <p class="section-desc">Manage college contact details.</p>
+                </div>
+                
+                <div class="admin-card">
+                    <h3 class="card-title">College Contact Details</h3>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>College Address</label>
+                            <input type="text" id="contactAddress" class="input-full">
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="text" id="contactPhone">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="contactEmail">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Website</label>
+                            <input type="text" id="contactWebsite" class="input-full">
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Admissions Email</label>
+                                <input type="email" id="contactAdmissions">
+                            </div>
+                            <div class="form-group">
+                                <label>Exams Email</label>
+                                <input type="email" id="contactExams">
+                            </div>
+                            <div class="form-group">
+                                <label>Placements Email</label>
+                                <input type="email" id="contactPlacements">
+                            </div>
+                        </div>
+                        <button onclick="saveContactInfo()" class="btn btn-primary">Save Contact Info</button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- ========================================================
+                 ADD CUSTOM SECTION
+                 Create new custom content sections
+                 ======================================================== -->
+            <section id="add-section" class="admin-section">
+                <div class="section-header">
+                    <h2>Add New Section</h2>
+                    <p class="section-desc">Create custom sections that the chatbot can answer questions about.</p>
+                </div>
+                
+                <div class="admin-card">
+                    <h3 class="card-title">New Custom Section</h3>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Section Name</label>
+                            <input type="text" id="newSectionName" class="input-full" placeholder="e.g., Sports Facilities, Library Rules">
+                        </div>
+                        <div class="form-group">
+                            <label>Keywords (comma separated)</label>
+                            <input type="text" id="newSectionKeywords" class="input-full" placeholder="e.g., sports, gym, playground, fitness">
+                            <span class="form-hint">These keywords help the chatbot understand when to show this section's content.</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Section Content</label>
+                            <textarea id="newSectionContent" rows="8" class="input-full" placeholder="Enter the information for this section. Use **text** for bold headings and - for bullet points."></textarea>
+                        </div>
+                        <button onclick="addCustomSection()" class="btn btn-primary">Create Section</button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Container for dynamically created custom sections -->
+            <div id="customSectionsContainer"></div>
+            
+        </main>
+        
+    </div>
+    
+    <!-- Status Message Toast -->
+    <div id="statusMessage" class="status-toast"></div>
+    
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+    
+</body>
+</html>

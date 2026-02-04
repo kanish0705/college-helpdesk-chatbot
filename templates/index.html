@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+============================================================================
+AI-Powered College Helpdesk Chatbot - Student Interface
+============================================================================
+Title: AI-Powered College Helpdesk Chatbot with Controlled Knowledge Scope
+Purpose: Provide instant, college-specific helpdesk support
+
+DESIGN DECISIONS:
+- Clean, academic look suitable for a real college website
+- Deep academic blue (#1e3a8a) as primary color for trust and professionalism
+- Light gray backgrounds for subtle contrast
+- No animations or emojis for professional appearance
+- 500-character limit enforced with live counter
+- Clear scope disclaimer to set expectations
+
+============================================================================
+-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ college_name }} - Student Helpdesk</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    
+    <!-- ================================================================
+         MAIN CONTAINER
+         Centered layout with max-width 1100px as per requirements
+         ================================================================ -->
+    <div class="main-container">
+        
+        <!-- ============================================================
+             STICKY HEADER
+             College branding area with name and subtitle
+             Uses deep academic blue for professionalism
+             ============================================================ -->
+        <header class="site-header">
+            <div class="header-content">
+                <h1 class="college-name">{{ college_name }}</h1>
+                <p class="header-subtitle">Student Helpdesk Assistant</p>
+            </div>
+            <!-- ========================================================
+                 SECURITY NOTE: Admin link intentionally removed
+                 Admin panel access is available only through secure URL
+                 ======================================================== -->
+        </header>
+        
+        <!-- ============================================================
+             MAIN CONTENT AREA
+             Contains student profile section and chat interface
+             ============================================================ -->
+        <main class="content-wrapper">
+            
+            <!-- ========================================================
+                 STUDENT PROFILE SELECTION AREA
+                 Allows students to select Department, Semester, Section
+                 for personalized responses
+                 ======================================================== -->
+            <section class="profile-section">
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <h2 class="section-title">Your Profile</h2>
+                        <button type="button" class="btn-text" id="profileToggle" onclick="toggleProfileEdit()">
+                            <span id="toggleText">Choose Your Class</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Current Profile Display -->
+                    <div class="profile-display" id="profileDisplay">
+                        <span class="profile-status" id="profileText">Select your class to get personalized responses</span>
+                    </div>
+                    
+                    <!-- Profile Edit Form (hidden by default) -->
+                    <div class="profile-form" id="profileEdit">
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label for="deptSelect">Department</label>
+                                <select id="deptSelect" onchange="updateProfile()">
+                                    <option value="">Select Department</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label for="semSelect">Semester</label>
+                                <select id="semSelect" onchange="updateProfile()">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <label for="secSelect">Section</label>
+                                <select id="secSelect" onchange="updateProfile()">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                            <div class="form-field form-action">
+                                <button type="button" class="btn btn-primary" onclick="saveProfile()">Save Profile</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- ========================================================
+                 NOTIFICATIONS BANNER
+                 Shows personalized notifications for the student
+                 Only visible when notifications are available
+                 ======================================================== -->
+            <div class="notifications-banner" id="notificationsBanner" style="display: none;">
+                <div class="notification-badge">!</div>
+                <div class="notification-text">
+                    <span id="notificationCount">0</span> new notification(s) for you
+                </div>
+                <button type="button" class="btn btn-small" onclick="showNotifications()">View</button>
+            </div>
+            
+            <!-- ========================================================
+                 CHAT INTERFACE CARD
+                 Main helpdesk chat area with messages
+                 ======================================================== -->
+            <section class="chat-section">
+                <div class="chat-card">
+                    
+                    <!-- Chat Card Header -->
+                    <div class="chat-card-header">
+                        <h2>Helpdesk Chat</h2>
+                        <!-- SCOPE DISCLAIMER - Important guardrail -->
+                        <p class="scope-note">This chatbot answers only college-related queries.</p>
+                    </div>
+                    
+                    <!-- Chat Messages Area -->
+                    <div class="chat-messages" id="chatArea">
+                        
+                        <!-- Welcome Message from Bot -->
+                        <div class="message message-bot">
+                            <div class="message-label">Helpdesk</div>
+                            <div class="message-bubble">
+                                <p>Welcome to the College Helpdesk!</p>
+                                <p>Please select your <strong>Department</strong>, <strong>Semester</strong>, and <strong>Section</strong> above to get personalized assistance.</p>
+                                <p><strong>I can help you with:</strong></p>
+                                <ul>
+                                    <li>Your class timetable</li>
+                                    <li>Room locations and directions</li>
+                                    <li>Class notifications and updates</li>
+                                    <li>Exam schedules</li>
+                                    <li>Assignment deadlines</li>
+                                    <li>Faculty information</li>
+                                    <li>Fee structure</li>
+                                    <li>Contact information</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <!-- Quick Action Buttons (visible after profile is set) -->
+                    <div class="quick-actions" id="quickActions" style="display: none;">
+                        <button type="button" class="quick-btn" onclick="askQuestion('What is my timetable for today?')">Today's Classes</button>
+                        <button type="button" class="quick-btn" onclick="askQuestion('Show my full timetable')">Full Timetable</button>
+                        <button type="button" class="quick-btn" onclick="askQuestion('Any notifications for me?')">Notifications</button>
+                        <button type="button" class="quick-btn" onclick="askQuestion('Upcoming exams')">Exams</button>
+                    </div>
+                    
+                    <!-- ================================================
+                         INPUT AREA
+                         Fixed at bottom of chat card
+                         Includes 500 character limit with live counter
+                         ================================================ -->
+                    <div class="chat-input-area">
+                        <form id="messageForm" class="input-form" onsubmit="handleFormSubmit(event)">
+                            <div class="input-wrapper">
+                                <input 
+                                    type="text" 
+                                    id="messageInput" 
+                                    class="message-input"
+                                    placeholder="Ask me anything about your college..."
+                                    autocomplete="off"
+                                    maxlength="500"
+                                    oninput="updateCharCounter()"
+                                    required
+                                >
+                                <!-- CHARACTER COUNTER - Guardrail for 500 char limit -->
+                                <span class="char-counter" id="charCounter">0/500</span>
+                            </div>
+                            <button type="submit" id="sendButton" class="btn btn-send">Send</button>
+                        </form>
+                        <!-- Character Limit Warning (hidden by default) -->
+                        <div class="char-warning" id="charWarning" style="display: none;">
+                            Character limit reached (500 max)
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+            
+            <!-- ========================================================
+                 FOOTER
+                 Additional contact information and disclaimer
+                 ======================================================== -->
+            <footer class="site-footer">
+                <p>For queries beyond this chatbot's scope, please contact the Admin Office.</p>
+                <p class="copyright">AI-Powered College Helpdesk Chatbot - Academic Project</p>
+            </footer>
+            
+        </main>
+        
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+    
+</body>
+</html>
